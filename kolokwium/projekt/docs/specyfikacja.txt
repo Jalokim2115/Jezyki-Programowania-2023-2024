@@ -1,0 +1,3 @@
+To jest Projekt Kolokwium
+Jest to przkładowy projekt programistyczny na zaliczenie
+Mam wielka nadzieje ze to zalicze

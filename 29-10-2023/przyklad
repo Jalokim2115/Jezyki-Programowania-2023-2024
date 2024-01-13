@@ -1,0 +1,148 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+int n = 0;
+
+void printArray() {
+    if (n == 0) {
+        printf("Tablica jest pusta.\n");
+        return;
+    }
+
+    printf("Elementy tablicy:\n");
+    for (int i = 0; i < n; ++i) {
+        printf("%c ", array[i]);
+    }
+    printf("\n");
+}
+
+void insertElement() {
+    if (n == MAX_SIZE) {
+        printf("Brak miejsca w tablicy.\n");
+        return;
+    }
+
+    char newElement;
+    printf("Podaj cyfrę do wstawienia: ");
+    scanf(" %c", &newElement);
+
+    if (newElement >= '0' && newElement <= '9') {
+        array[n++] = newElement;
+        printf("Cyfra %c została dodana do tablicy.\n", newElement);
+    } else {
+        printf("Podany znak nie jest cyfrą.\n");
+    }
+}
+
+void deleteElement() {
+    if (n == 0) {
+        printf("Tablica jest pusta.\n");
+        return;
+    }
+
+    int index;
+    printf("Podaj indeks elementu do usunięcia: ");
+    scanf("%d", &index);
+
+    if (index < 0 || index >= n) {
+        printf("Błędny indeks.\n");
+        return;
+    }
+
+    for (int i = index; i < n - 1; ++i) {
+        array[i] = array[i + 1];
+    }
+
+    --n;
+    printf("Element na indeksie %d został usunięty.\n", index);
+}
+
+int sumOfDigits() {
+    if (n == 0) {
+        return -1; // Sygnalizacja błędu
+    }
+
+    int sum = 0;
+    for (int i = 0; i < n; ++i) {
+        sum += array[i] - '0';
+    }
+
+    return sum;
+}
+
+void printAsBinaryTree() {
+    if (n == 0) {
+        printf("Tablica jest pusta.\n");
+        return;
+    }
+
+    int level = 1;
+    int count = 0;
+
+    for (int i = 0; i < n; ++i) {
+        if (count == level) {
+            printf("\n");
+            level *= 2;
+            count = 0;
+        }
+
+        printf("%c ", array[i]);
+        ++count;
+    }
+
+    printf("\n");
+}
+
+int main() {
+    char array[MAX_SIZE];
+    int choice;
+
+    while (1) {
+        printf("\nDostępne opcje:\n");
+        printf("0. Zakończ program\n");
+        printf("1. Wyświetl elementy tablicy\n");
+        printf("2. Wstaw nowy element\n");
+        printf("3. Usuń element\n");
+        printf("4. Suma cyfr w tablicy\n");
+        printf("5. Wyświetl tablicę jako drzewo binarne\n");
+
+        printf("Wybierz opcję: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 0:
+                printf("Koniec programu.\n");
+                exit(0);
+            case 1:
+                printArray();
+                break;
+            case 2:
+                insertElement();
+                break;
+            case 3:
+                deleteElement();
+                break;
+            case 4:
+                if (n == 0) {
+                    printf("Tablica jest pusta, suma cyfr: 0\n");
+                } else {
+                    int sum = sumOfDigits();
+                    if (sum == -1) {
+                        printf("Błąd: suma cyfr nie może być obliczona.\n");
+                    } else {
+                        printf("Suma cyfr w tablicy: %d\n", sum);
+                    }
+                }
+                break;
+            case 5:
+                printAsBinaryTree();
+                break;
+            default:
+                printf("Błędny wybór. Wybierz ponownie.\n");
+        }
+    }
+
+    return 0;
+}
